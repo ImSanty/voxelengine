@@ -10,7 +10,7 @@ public class Camera {
   float rotX;
   float rotY;
   float rotZ;
-  float speed = 0.3f;
+  float speed = 0.6f;
 
   public Camera(Vector3f position, float rotX, float rotY, float rotZ) {
     this.position = position;

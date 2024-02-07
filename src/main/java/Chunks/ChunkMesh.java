@@ -78,37 +78,37 @@ public class ChunkMesh {
       if (!px) {
         for (int k = 0; k < 6; k++) {
           vertices.add(new Vertex(new Vector3f(CubeModel.PX_POS[k].x + blockI.x, CubeModel.PX_POS[k].y + blockI.y,
-              CubeModel.PX_POS[k].z + blockI.z), CubeModel.UV[k], CubeModel.NORMALS[k]));
+              CubeModel.PX_POS[k].z + blockI.z), CubeModel.UV_PX[(blockI.type * 6) + k], CubeModel.NORMALS[k]));
         }
       }
       if (!nx) {
         for (int k = 0; k < 6; k++) {
           vertices.add(new Vertex(new Vector3f(CubeModel.NX_POS[k].x + blockI.x, CubeModel.NX_POS[k].y + blockI.y,
-              CubeModel.NX_POS[k].z + blockI.z), CubeModel.UV[k], CubeModel.NORMALS[k]));
+              CubeModel.NX_POS[k].z + blockI.z), CubeModel.UV_NX[(blockI.type * 6) + k], CubeModel.NORMALS[k]));
         }
       }
       if (!py) {
         for (int k = 0; k < 6; k++) {
           vertices.add(new Vertex(new Vector3f(CubeModel.PY_POS[k].x + blockI.x, CubeModel.PY_POS[k].y + blockI.y,
-              CubeModel.PY_POS[k].z + blockI.z), CubeModel.UV[k], CubeModel.NORMALS[k]));
+              CubeModel.PY_POS[k].z + blockI.z), CubeModel.UV_PY[(blockI.type * 6) + k], CubeModel.NORMALS[k]));
         }
       }
       if (!ny) {
         for (int k = 0; k < 6; k++) {
           vertices.add(new Vertex(new Vector3f(CubeModel.NY_POS[k].x + blockI.x, CubeModel.NY_POS[k].y + blockI.y,
-              CubeModel.NY_POS[k].z + blockI.z), CubeModel.UV[k], CubeModel.NORMALS[k]));
+              CubeModel.NY_POS[k].z + blockI.z), CubeModel.UV_NY[(blockI.type * 6) + k], CubeModel.NORMALS[k]));
         }
       }
       if (!pz) {
         for (int k = 0; k < 6; k++) {
           vertices.add(new Vertex(new Vector3f(CubeModel.PZ_POS[k].x + blockI.x, CubeModel.PZ_POS[k].y + blockI.y,
-              CubeModel.PZ_POS[k].z + blockI.z), CubeModel.UV[k], CubeModel.NORMALS[k]));
+              CubeModel.PZ_POS[k].z + blockI.z), CubeModel.UV_PZ[(blockI.type * 6) + k], CubeModel.NORMALS[k]));
         }
       }
       if (!nz) {
         for (int k = 0; k < 6; k++) {
           vertices.add(new Vertex(new Vector3f(CubeModel.NZ_POS[k].x + blockI.x, CubeModel.NZ_POS[k].y + blockI.y,
-              CubeModel.NZ_POS[k].z + blockI.z), CubeModel.UV[k], CubeModel.NORMALS[k]));
+              CubeModel.NZ_POS[k].z + blockI.z), CubeModel.UV_NZ[(blockI.type * 6) + k], CubeModel.NORMALS[k]));
         }
       }
     }

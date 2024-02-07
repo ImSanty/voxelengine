@@ -74,6 +74,270 @@ public class CubeModel {
 
   };
 
+  public static Vector2f[] UV_PX = {
+
+      // GRASS
+      new Vector2f(1.f / 16.f, 0.f),
+      new Vector2f(1.f / 16.f, 1.f / 16.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(2.f / 16.f, 0.f / 16.f),
+      new Vector2f(1.f / 16.f, 0.f),
+
+      // DIRT
+      new Vector2f(2.f / 16.f, 0.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 0.f / 16.f),
+      new Vector2f(2.f / 16.f, 0.f),
+
+      // STONE
+      new Vector2f(3.f / 16.f, 0.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 0.f / 16.f),
+      new Vector2f(3.f / 16.f, 0.f),
+
+      // TREEBARK
+      new Vector2f(4.f / 16.f, 0.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(5.f / 16.f, 1.f / 16.f),
+      new Vector2f(5.f / 16.f, 1.f / 16.f),
+      new Vector2f(5.f / 16.f, 0.f / 16.f),
+      new Vector2f(4.f / 16.f, 0.f),
+
+      // TREELEAF
+      new Vector2f(6.f / 16.f, 0.f),
+      new Vector2f(6.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 0.f / 16.f),
+      new Vector2f(6.f / 16.f, 0.f)
+
+  };
+
+  public static Vector2f[] UV_NX = {
+
+      // GRASS
+      new Vector2f(1.f / 16.f, 0.f),
+      new Vector2f(1.f / 16.f, 1.f / 16.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(2.f / 16.f, 0.f / 16.f),
+      new Vector2f(1.f / 16.f, 0.f),
+
+      // DIRT
+      new Vector2f(2.f / 16.f, 0.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 0.f / 16.f),
+      new Vector2f(2.f / 16.f, 0.f),
+
+      // STONE
+      new Vector2f(3.f / 16.f, 0.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 0.f / 16.f),
+      new Vector2f(3.f / 16.f, 0.f),
+
+      // TREEBARK
+      new Vector2f(4.f / 16.f, 0.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(5.f / 16.f, 1.f / 16.f),
+      new Vector2f(5.f / 16.f, 1.f / 16.f),
+      new Vector2f(5.f / 16.f, 0.f / 16.f),
+      new Vector2f(4.f / 16.f, 0.f),
+
+      // TREELEAF
+      new Vector2f(6.f / 16.f, 0.f),
+      new Vector2f(6.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 0.f / 16.f),
+      new Vector2f(6.f / 16.f, 0.f)
+
+  };
+
+  public static Vector2f[] UV_PY = {
+
+      // GRASS
+      new Vector2f(0.f, 0.f),
+      new Vector2f(0.f, 1.f / 16.f),
+      new Vector2f(1.f / 16.f, 1.f / 16.f),
+      new Vector2f(1.f / 16.f, 1.f / 16.f),
+      new Vector2f(1.f / 16.f, 0.f),
+      new Vector2f(0.f, 0.f),
+
+      // DIRT
+      new Vector2f(2.f / 16.f, 0.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 0.f / 16.f),
+      new Vector2f(2.f / 16.f, 0.f),
+
+      // STONE
+      new Vector2f(3.f / 16.f, 0.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 0.f / 16.f),
+      new Vector2f(3.f / 16.f, 0.f),
+
+      // TREEBARK
+      new Vector2f(5.f / 16.f, 0.f),
+      new Vector2f(5.f / 16.f, 1.f / 16.f),
+      new Vector2f(6.f / 16.f, 1.f / 16.f),
+      new Vector2f(6.f / 16.f, 1.f / 16.f),
+      new Vector2f(6.f / 16.f, 0.f / 16.f),
+      new Vector2f(5.f / 16.f, 0.f),
+
+      // TREELEAF
+      new Vector2f(6.f / 16.f, 0.f),
+      new Vector2f(6.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 0.f / 16.f),
+      new Vector2f(6.f / 16.f, 0.f)
+
+  };
+
+  public static Vector2f[] UV_NY = {
+
+      // GRASS
+      new Vector2f(2.f / 16.f, 0.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 0.f / 16.f),
+      new Vector2f(2.f / 16.f, 0.f),
+
+      // DIRT
+      new Vector2f(2.f / 16.f, 0.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 0.f / 16.f),
+      new Vector2f(2.f / 16.f, 0.f),
+
+      // STONE
+      new Vector2f(3.f / 16.f, 0.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 0.f / 16.f),
+      new Vector2f(3.f / 16.f, 0.f),
+
+      // TREEBARK
+      new Vector2f(5.f / 16.f, 0.f),
+      new Vector2f(5.f / 16.f, 1.f / 16.f),
+      new Vector2f(6.f / 16.f, 1.f / 16.f),
+      new Vector2f(6.f / 16.f, 1.f / 16.f),
+      new Vector2f(6.f / 16.f, 0.f / 16.f),
+      new Vector2f(5.f / 16.f, 0.f),
+
+      // TREELEAF
+      new Vector2f(6.f / 16.f, 0.f),
+      new Vector2f(6.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 0.f / 16.f),
+      new Vector2f(6.f / 16.f, 0.f)
+
+  };
+
+  public static Vector2f[] UV_PZ = {
+
+      // GRASS
+      new Vector2f(1.f / 16.f, 0.f),
+      new Vector2f(1.f / 16.f, 1.f / 16.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(2.f / 16.f, 0.f / 16.f),
+      new Vector2f(1.f / 16.f, 0.f),
+
+      // DIRT
+      new Vector2f(2.f / 16.f, 0.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 0.f / 16.f),
+      new Vector2f(2.f / 16.f, 0.f),
+
+      // STONE
+      new Vector2f(3.f / 16.f, 0.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 0.f / 16.f),
+      new Vector2f(3.f / 16.f, 0.f),
+
+      // TREEBARK
+      new Vector2f(4.f / 16.f, 0.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(5.f / 16.f, 1.f / 16.f),
+      new Vector2f(5.f / 16.f, 1.f / 16.f),
+      new Vector2f(5.f / 16.f, 0.f / 16.f),
+      new Vector2f(4.f / 16.f, 0.f),
+
+      // TREELEAF
+      new Vector2f(6.f / 16.f, 0.f),
+      new Vector2f(6.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 0.f / 16.f),
+      new Vector2f(6.f / 16.f, 0.f)
+
+  };
+
+  public static Vector2f[] UV_NZ = {
+
+      // GRASS
+      new Vector2f(1.f / 16.f, 0.f),
+      new Vector2f(1.f / 16.f, 1.f / 16.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(2.f / 16.f, 0.f / 16.f),
+      new Vector2f(1.f / 16.f, 0.f),
+
+      // DIRT
+      new Vector2f(2.f / 16.f, 0.f),
+      new Vector2f(2.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(3.f / 16.f, 0.f / 16.f),
+      new Vector2f(2.f / 16.f, 0.f),
+
+      // STONE
+      new Vector2f(3.f / 16.f, 0.f),
+      new Vector2f(3.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(4.f / 16.f, 0.f / 16.f),
+      new Vector2f(3.f / 16.f, 0.f),
+
+      // TREEBARK
+      new Vector2f(4.f / 16.f, 0.f),
+      new Vector2f(4.f / 16.f, 1.f / 16.f),
+      new Vector2f(5.f / 16.f, 1.f / 16.f),
+      new Vector2f(5.f / 16.f, 1.f / 16.f),
+      new Vector2f(5.f / 16.f, 0.f / 16.f),
+      new Vector2f(4.f / 16.f, 0.f),
+
+      // TREELEAF
+      new Vector2f(6.f / 16.f, 0.f),
+      new Vector2f(6.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 1.f / 16.f),
+      new Vector2f(7.f / 16.f, 0.f / 16.f),
+      new Vector2f(6.f / 16.f, 0.f)
+
+  };
+
   public static Vector3f[] NORMALS = {
       new Vector3f(0.f, 0.f, 0.f),
       new Vector3f(0.f, 0.f, 0.f),

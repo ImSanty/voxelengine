@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class PerlinNoiseGenerator {
 
-  public static float AMPLITUDE = 90f;
-  public static int OCTAVES = 7;
-  public static float ROUGHNESS = 0.3f;
+  public static float AMPLITUDE = 250f;
+  public static float OCTAVES = 8.87f;
+  public static float ROUGHNESS = 0.37f;
 
   private Random random = new Random();
   private int seed;
@@ -14,7 +14,11 @@ public class PerlinNoiseGenerator {
   private int zOffset = 0;
 
   public PerlinNoiseGenerator() {
-    this.seed = 0;
+    int min = 0;
+    int max = 999999999;
+
+    int randomSeed = random.nextInt(max - min + 1) + min;
+    this.seed = randomSeed;
   }
 
   // only works with POSITIVE gridX and gridZ values!

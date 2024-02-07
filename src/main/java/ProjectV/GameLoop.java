@@ -2,6 +2,7 @@ package ProjectV;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.lwjgl.opengl.Display;
@@ -26,14 +27,16 @@ public class GameLoop {
   public static StaticShader shader;
   public static Loader loader = new Loader();
   static Vector3f camPos = new Vector3f(0, 0, 0);
-  static List<ChunkMesh> chunks = Collections.synchronizedList(new ArrayList<ChunkMesh>());
-  static List<Vector3f> usedPos = new ArrayList<Vector3f>();
-  static List<Entity> entities = new ArrayList<Entity>();
+  static List<ChunkMesh> chunks = Collections.synchronizedList(new ArrayList<>());
+  static List<Vector3f> usedPos = Collections.synchronizedList(new ArrayList<>());
+  static List<Entity> entities = Collections.synchronizedList(new ArrayList<>());
+  PerlinNoiseGenerator generator = new PerlinNoiseGenerator();
 
   int fpsCap = 240;
   int tickRate = 60;
   static final int chunkSize = 16;
-  static final int renderDistance = 16 * chunkSize;
+  static final int renderDistance = 25 * chunkSize;
+  static final int maxChunksPerIteration = 10;
 
   int showFPS;
   long drawTime;
@@ -51,89 +54,89 @@ public class GameLoop {
     displayManager.createDisplay();
     GameLoop.shader = new StaticShader();
     MasterRenderer renderer = new MasterRenderer();
-    ModelTextures textures = new ModelTextures(loader.loadTexture("spruce_planks"));
-    Camera camera = new Camera(new Vector3f(0, 2f, 0), 0, 0, 0);
-    PerlinNoiseGenerator generator = new PerlinNoiseGenerator();
+    ModelTextures textures = new ModelTextures(loader.loadTexture("DefaultPack"));
+    Camera camera = new Camera(new Vector3f(0, 50f, 0), 0, 0, 0);
 
-    // Thread-1 - Terrain Generation
+    // Terrain Generation Thread
+    new Thread(() -> {
+      while (!Display.isCloseRequested()) {
+        generateTerrain();
+      }
+    }).start();
+
+    // Main Game Loop
     while (!Display.isCloseRequested()) {
-      new Thread(new Runnable() {
-        public void run() {
-          while (!Display.isCloseRequested()) {
-            for (int x = (int) (camPos.x - renderDistance) / chunkSize; x < (camPos.x +
-                renderDistance)
-                / chunkSize; x++) {
-              for (int z = (int) (camPos.z - renderDistance) / chunkSize; z < (camPos.z +
-                  renderDistance)
-                  / chunkSize; z++) {
-                if (!usedPos.contains(new Vector3f(x * chunkSize, 0 * chunkSize, z *
-                    chunkSize))) {
-                  List<Blocks> blocks = new ArrayList<Blocks>();
-                  for (int i = 0; i < chunkSize; i++) {
-                    for (int j = 0; j < chunkSize; j++) {
-                      blocks.add(new Blocks(i, (int) generator.generateHeight(i + (x * chunkSize), j + (z * chunkSize)),
-                          j, Blocks.TYPE.DIRT));
-                    }
-                  }
-                  Chunk chunk = new Chunk(blocks, new Vector3f(x * chunkSize, 0, z * chunkSize));
-                  ChunkMesh mesh = new ChunkMesh(chunk);
+      render(renderer, camera, textures);
+      update(renderer);
+    }
 
-                  chunks.add(mesh);
-                  usedPos.add(new Vector3f(x * chunkSize, 0 * chunkSize, z * chunkSize));
-                }
-              }
-            }
+    // Clean up
+    DisplayManager.closeDisplay();
+  }
+
+  // Terrain generation logic
+  private void generateTerrain() {
+    int startX = ((int) camPos.x - renderDistance) / chunkSize;
+    int startZ = ((int) camPos.z - renderDistance) / chunkSize;
+    int endX = ((int) camPos.x + renderDistance) / chunkSize;
+    int endZ = ((int) camPos.z + renderDistance) / chunkSize;
+
+    List<Vector3f> newChunkPositions = new ArrayList<>();
+
+    for (int x = startX; x <= endX; x++) {
+      for (int z = startZ; z <= endZ; z++) {
+        Vector3f chunkPos = new Vector3f(x * chunkSize, 0, z * chunkSize);
+        newChunkPositions.add(chunkPos);
+      }
+    }
+
+    // Sort the new chunk positions by their distance from the camera
+    newChunkPositions.sort(Comparator.comparingDouble(
+        pos -> Math.sqrt((pos.x - camPos.x) * (pos.x - camPos.x) + (pos.z - camPos.z) * (pos.z - camPos.z))));
+
+    // Generate chunks in batches
+    int chunksGenerated = 0;
+    for (Vector3f chunkPos : newChunkPositions) {
+      if (chunksGenerated >= maxChunksPerIteration) {
+        break;
+      }
+      if (!usedPos.contains(chunkPos)) {
+        List<Blocks> blocks = new ArrayList<>();
+        for (int i = 0; i < chunkSize; i++) {
+          for (int j = 0; j < chunkSize; j++) {
+            blocks.add(new Blocks(i, (int) generator.generateHeight((int) chunkPos.x + i, (int) chunkPos.z + j),
+                j, Blocks.GRASS));
           }
         }
-      }).start();
-
-      while (!Display.isCloseRequested()) {
-        render(renderer, camera, textures);
-
-        // Debug
-        long now = System.nanoTime();
-        deltaUpdate += (now - lastTime) / nsPerUpdate;
-        deltaRender += (now - lastTime) / nsPerRender;
-        lastTime = now;
-
-        while (deltaUpdate >= 1) {
-          update(renderer);
-          deltaUpdate--;
-          tickCount++;
-        }
-
-        while (deltaRender >= 1) {
-          deltaRender--;
-          frameCount++;
-        }
-
-        // Draw Time
-        long drawStart = System.nanoTime();
-        long drawEnd = System.nanoTime();
-        long passed = drawEnd - drawStart;
-        drawTime = passed;
-
+        Chunk chunk = new Chunk(blocks, chunkPos);
+        ChunkMesh mesh = new ChunkMesh(chunk);
+        chunks.add(mesh);
+        usedPos.add(chunkPos);
+        chunksGenerated++;
       }
-      DisplayManager.closeDisplay();
     }
+
   }
 
   // Update Thread
   private void update(MasterRenderer renderer) {
+    // Draw Time
+    long drawStart = System.nanoTime();
+    long drawEnd = System.nanoTime();
+    long passed = drawEnd - drawStart;
+    drawTime = passed;
+
     if (System.currentTimeMillis() - timer > 1000) {
       timer += 1000;
       showFPS = frameCount;
       Display.setTitle(
-          "Voxel Engine - dev build | Fps: " + showFPS + " - Tps: " + tickCount + " - DrawTime: " + drawTime
-              + "ns");
+          "Voxel Engine - dev build | Fps: " + showFPS + " - Tps: " + tickCount + " - DrawTime: " + drawTime + "ns");
       frameCount = 0;
       tickCount = 0;
     }
   }
 
   // Render Thread
-  int index = 0;
-
   private void render(MasterRenderer renderer, Camera camera, ModelTextures textures) {
     Display.update();
     camera.move();
@@ -141,31 +144,28 @@ public class GameLoop {
     renderer.render(camera);
     displayManager.KeyHandler();
 
-    if (index < chunks.size()) {
-      RawModel model123 = loader.loadToVAO(chunks.get(index).positions, chunks.get(index).uvs);
-      TexturedModel texModel123 = new TexturedModel(model123, textures);
-      Entity entity = new Entity(texModel123, chunks.get(index).chunk.origin, 0, 0, 0, 1);
-      entities.add(entity);
-      chunks.get(index).positions = null;
-      chunks.get(index).normals = null;
-      chunks.get(index).uvs = null;
-
-      index++;
+    synchronized (chunks) {
+      for (int i = 0; i < chunks.size(); i++) {
+        ChunkMesh chunk = chunks.get(i);
+        RawModel model = loader.loadToVAO(chunk.positions, chunk.uvs);
+        TexturedModel texModel = new TexturedModel(model, textures);
+        Entity entity = new Entity(texModel, chunk.chunk.origin, 0, 0, 0, 1);
+        entities.add(entity);
+        chunk.positions = null;
+        chunk.normals = null;
+        chunk.uvs = null;
+      }
+      chunks.clear();
     }
 
-    for (int i = 0; i < entities.size(); i++) {
-      Vector3f origin = entities.get(i).getPosition();
-      int distX = (int) (camPos.x - origin.x);
-      int distZ = (int) (camPos.z - origin.z);
-
-      if (distX < 0) {
-        distX = -distX;
-      }
-      if (distZ < 0) {
-        distZ = -distZ;
-      }
-      if ((distX <= renderDistance) && (distZ <= renderDistance)) {
-        renderer.addEntity(entities.get(i));
+    synchronized (entities) {
+      for (Entity entity : entities) {
+        Vector3f origin = entity.getPosition();
+        int distX = (int) (camPos.x - origin.x);
+        int distZ = (int) (camPos.z - origin.z);
+        if (Math.abs(distX) <= renderDistance && Math.abs(distZ) <= renderDistance) {
+          renderer.addEntity(entity);
+        }
       }
     }
   }
