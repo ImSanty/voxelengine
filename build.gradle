@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'org.example'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    lwjglVersion = '3.3.1'
+}
+
+dependencies {
+    // Use LWJGL2 for this project (legacy org.lwjgl.* API used across the codebase)
+
+    // Add LWJGL 2 (project uses legacy org.lwjgl.* and org.lwjgl.util.vector)
+    ext.lwjgl2Version = '2.9.3'
+    implementation "org.lwjgl.lwjgl:lwjgl:${lwjgl2Version}"
+    implementation "org.lwjgl.lwjgl:lwjgl_util:${lwjgl2Version}"
+    // platform artifact for LWJGL2 natives (single package)
+    runtimeOnly "org.lwjgl.lwjgl:lwjgl-platform:${lwjgl2Version}:natives-windows"
+
+    // We will use ImageIO for texture loading instead of slick-util
+}
+
+application {
+    mainClass = 'ProjectV.Main'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
