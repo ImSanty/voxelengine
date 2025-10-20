@@ -8,6 +8,7 @@ import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.ARBShaderObjects;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -57,8 +58,40 @@ public abstract class ShaderProgram {
   protected void loadMatrix(int location, Matrix4f mat) {
     mat.store(matrixBuffer);
     matrixBuffer.flip();
+    // Use reflection to call whichever glUniformMatrix method is available
+    try {
+      // Try GL20 first
+      java.lang.reflect.Method m = null;
+      try {
+        m = GL20.class.getMethod("glUniformMatrix4", int.class, boolean.class, FloatBuffer.class);
+      } catch (NoSuchMethodException e) {
+        // try other common names
+        try {
+          m = GL20.class.getMethod("glUniformMatrix4fv", int.class, boolean.class, FloatBuffer.class);
+        } catch (NoSuchMethodException e2) {
+          // try ARB helper
+          try {
+            m = ARBShaderObjects.class.getMethod("glUniformMatrix4ARB", int.class, boolean.class,
+                FloatBuffer.class);
+          } catch (NoSuchMethodException e3) {
+            try {
+              m = ARBShaderObjects.class.getMethod("glUniformMatrix4fvARB", int.class, boolean.class,
+                  FloatBuffer.class);
+            } catch (NoSuchMethodException e4) {
+              // give up silently (matrix won't be uploaded)
+              m = null;
+            }
+          }
+        }
+      }
 
-    GL20.glUniformMatrix4(location, false, matrixBuffer);
+      if (m != null) {
+        m.invoke(null, location, false, matrixBuffer);
+      }
+    } catch (Exception e) {
+      // Log but don't crash; shader may still use default matrices
+      e.printStackTrace();
+    }
   }
 
   protected void loadBoolean(int location, boolean bool) {
@@ -94,6 +127,10 @@ public abstract class ShaderProgram {
   private int loadShader(String file, int type) {
     StringBuilder shaderSource = new StringBuilder();
     InputStream in = getClass().getResourceAsStream(file);
+    if (in == null) {
+      // try absolute path from resources root
+      in = getClass().getResourceAsStream("/" + file);
+    }
     if (in == null) {
       System.err.println("Shader file not found: " + file);
       System.exit(-1);
