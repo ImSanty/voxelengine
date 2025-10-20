@@ -1,2 +1,51 @@
-# Generated
-target
+# Build artifacts
+/build/
+/target/
+/out/
+/bin/
+/dist/
+/classes/
+/tmp/
+/debug/
+
+# Gradle local state
+/.gradle/
+/gradle-dist/
+
+# Java bytecode and packaged archives
+*.class
+*.jar
+*.war
+*.ear
+
+# IDE specific files
+/.idea/
+/.vscode/
+*.ipr
+*.iws
+*.iml
+.classpath
+.project
+/.settings/
+
+# Logs and crash dumps
+*.log
+hs_err_pid*
+replay_pid*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Miscellaneous local state
+*.swp
+*~
+.env
+
+run_log.txt
+run_log2.txt
+run_log3.txt
+
+gc.log.0
+
+diag_snapshot.txt
