@@ -22,6 +22,10 @@ public class EntityRenderer {
       GL30.glBindVertexArray(model.getModel().getVaoID());
       GL20.glEnableVertexAttribArray(0);
       GL20.glEnableVertexAttribArray(1);
+      // enable normal attribute
+      GL20.glEnableVertexAttribArray(2);
+      // enable AO attribute if present
+      GL20.glEnableVertexAttribArray(3);
 
       GL13.glActiveTexture(GL13.GL_TEXTURE0);
       GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getTextures().getTextureID());
@@ -40,6 +44,10 @@ public class EntityRenderer {
 
       GL20.glDisableVertexAttribArray(0);
       GL20.glDisableVertexAttribArray(1);
+      // disable normal attribute
+      GL20.glDisableVertexAttribArray(2);
+      // disable AO attribute
+      GL20.glDisableVertexAttribArray(3);
       GL30.glBindVertexArray(0);
     }
   }
