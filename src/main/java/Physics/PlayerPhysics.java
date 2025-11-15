@@ -145,6 +145,7 @@ public class PlayerPhysics {
     // processed separately, which avoids diagonal pre-push and slowdown.
   }
 
+  @SuppressWarnings("unused")
   private static class SweepResult {
     boolean hit;
     float t;
