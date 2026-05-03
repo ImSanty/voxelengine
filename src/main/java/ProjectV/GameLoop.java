@@ -92,7 +92,7 @@ public class GameLoop {
   static final int MAX_CHUNK_GENERATIONS = Math.max(12, Runtime.getRuntime().availableProcessors() * 4);
   static volatile int chunkGenerationsInProgress = 0;
 
-  int fpsCap = 240;
+  int fpsCap = 840;
   int tickRate = 60;
   static final int chunkSize = 16;
   // Mesh build concurrency limit
@@ -119,7 +119,7 @@ public class GameLoop {
   public static final int TOP_SOIL_DEPTH = 2; // grass + dirt depth
   public static final boolean SOLID_COLUMNS = true; // solid columns from y=0 up to surface
   // View distance in blocks (square / Chebyshev)
-  static final int renderDistance = 8 * chunkSize;
+  static final int renderDistance = 10 * chunkSize;
 
   /** Public accessor for render distance in blocks (Chebyshev axis limit). */
   public static int getRenderDistance() {
